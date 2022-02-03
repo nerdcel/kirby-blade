@@ -186,4 +186,7 @@ After declaration you can use it like:
 | doRemoveOmittedHtmlTags | remove ommitted html tags e.g. \<p\>lall\<\/p\> => \<p\>lall |
 You can get detailed information from `HtmlMin` library: [voku/HtmlMin](https://github.com/voku/HtmlMin#options)
 
-*Developed from [Kirby Blade Repository](https://github.com/beebmx/kirby-blade) maintained by [@beebmx](https://github.com/beebmx)*
+## Credits
+- [Kirby Blade](https://github.com/afbora/kirby-blade) by [@afbora](https://github.com/afbora)
+- [Torch](https://github.com/mattstauffer/Torch) by [@mattstauffer](https://github.com/mattstauffer)
+- [Kirby Blade Repository](https://github.com/beebmx/kirby-blade) by [@beebmx](https://github.com/beebmx)
