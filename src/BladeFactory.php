@@ -2,7 +2,9 @@
 
 namespace Afbora;
 
+use Illuminate\Config\Repository;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Facade;
@@ -10,14 +12,11 @@ use Illuminate\Support\Facades\View;
 use Illuminate\View\Compilers\BladeCompiler;
 use Illuminate\View\Engines\CompilerEngine;
 use Illuminate\View\Engines\EngineResolver;
-use Illuminate\View\Factory;
 use Illuminate\View\FileViewFinder;
 
 class BladeFactory
 {
-    protected Factory $viewFactory;
-
-    public function __construct(array $pathsToTemplates, string $pathToCompiledTemplates)
+    static public function register(array $pathsToTemplates, string $pathToCompiledTemplates)
     {
         $container = App::getInstance();
 
@@ -36,12 +35,12 @@ class BladeFactory
         $viewResolver->register('blade', fn () => new CompilerEngine($bladeCompiler));
 
         $viewFinder = new FileViewFinder($filesystem, $pathsToTemplates);
-        $this->viewFactory = new Factory($viewResolver, $viewFinder, $eventDispatcher);
-        $this->viewFactory->setContainer($container);
+        $viewFactory = new \Illuminate\View\Factory($viewResolver, $viewFinder, $eventDispatcher);
+        $viewFactory->setContainer($container);
         Facade::setFacadeApplication($container);
-        $container->instance(\Illuminate\Contracts\View\Factory::class, $this->viewFactory);
+        $container->instance(Factory::class, $viewFactory);
         $container->alias(
-            \Illuminate\Contracts\View\Factory::class,
+            Factory::class,
             (new class extends View {
                 public static function getFacadeAccessor()
                 {
@@ -59,10 +58,9 @@ class BladeFactory
                 }
             })::getFacadeAccessor()
         );
-    }
 
-    public function getViewFactory(): Factory
-    {
-        return $this->viewFactory;
+        $config = new Repository();
+        $config->set('view.compiled', $pathToCompiledTemplates);
+        $container['config'] = $config;
     }
 }

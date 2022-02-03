@@ -1,5 +1,9 @@
 <?php
 
+use Afbora\BladeDirectives;
+use Afbora\BladeFactory;
+use Afbora\BladeIfStatements;
+use Afbora\Paths;
 use Afbora\Template;
 use Kirby\Cms\App as Kirby;
 
@@ -21,6 +25,13 @@ Kirby::plugin('afbora/blade', [
         'template' => function (Kirby $kirby, string $name, string $contentType = null) {
             return new Template($kirby, $name, $contentType);
         }
+    ],
+    'hooks' => [
+        'system.loadPlugins:after' => function () {
+            BladeFactory::register([Paths::getPathTemplates()], Paths::getPathViews());
+            BladeDirectives::register();
+            BladeIfStatements::register();
+        },
     ],
     'routes' => [
         [
