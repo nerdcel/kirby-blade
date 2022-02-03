@@ -1,15 +1,15 @@
 <?php
 
-use Afbora\BladeDirectives;
-use Afbora\BladeFactory;
-use Afbora\BladeIfStatements;
-use Afbora\Paths;
-use Afbora\Template;
+use Leitsch\Blade\BladeDirectives;
+use Leitsch\Blade\BladeFactory;
+use Leitsch\Blade\BladeIfStatements;
+use Leitsch\Blade\Paths;
+use Leitsch\Blade\Template;
 use Kirby\Cms\App as Kirby;
 
 @include_once __DIR__ . '/vendor/autoload.php';
 
-Kirby::plugin('afbora/blade', [
+Kirby::plugin('leitsch/blade', [
     'options' => [
         'views' => function () {
             return kirby()->roots()->cache() . '/views';
