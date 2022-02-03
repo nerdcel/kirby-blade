@@ -1,6 +1,6 @@
 <?php
 
-namespace Leisch\Blade;
+namespace Leitsch\Blade;
 
 use Illuminate\Support\Facades\Blade;
 
