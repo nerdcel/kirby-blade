@@ -1,6 +1,6 @@
 <?php
 
-namespace Afbora;
+namespace Leisch\Blade;
 
 use Illuminate\Support\Facades\Blade;
 
@@ -8,7 +8,7 @@ class BladeIfStatements
 {
     public static function register()
     {
-        foreach (option('afbora.blade.ifs', []) as $statement => $callback) {
+        foreach (option('leitsch.blade.ifs', []) as $statement => $callback) {
             Blade::if($statement, $callback);
         }
     }

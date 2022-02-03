@@ -1,6 +1,6 @@
 <?php
 
-namespace Afbora;
+namespace Leitsch\Blade;
 
 use Illuminate\Container\Container;
 

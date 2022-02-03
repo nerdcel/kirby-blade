@@ -1,6 +1,6 @@
 <?php
 
-namespace Afbora;
+namespace Leitsch\Blade;
 
 use Illuminate\Support\Facades\Blade;
 
@@ -224,7 +224,7 @@ class BladeDirectives
             return "<?php echo youtube($url) ?>";
         });
 
-        foreach ($directives = option('afbora.blade.directives', []) as $directive => $callback) {
+        foreach ($directives = option('leitsch.blade.directives', []) as $directive => $callback) {
             Blade::directive($directive, $callback);
         }
     }

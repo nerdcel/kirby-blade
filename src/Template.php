@@ -1,6 +1,6 @@
 <?php
 
-namespace Afbora;
+namespace Leitsch\Blade;
 
 use Exception;
 use Illuminate\Support\Facades\View;
@@ -36,9 +36,9 @@ class Template extends KirbyTemplate
             $html = Tpl::load($this->file(), $data);
         }
 
-        if (option('afbora.blade.minify.enabled', false) === true) {
+        if (option('leitsch.blade.minify.enabled', false) === true) {
             $htmlMin = new HtmlMin();
-            $options = option('afbora.blade.minify.options', []);
+            $options = option('leitsch.blade.minify.options', []);
 
             foreach ($options as $option => $status) {
                 if (method_exists($htmlMin, $option)) {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Afbora;
+namespace Leitsch\Blade;
 
 class Paths
 {
     public static function getPathTemplates(): string
     {
-        $optionPath = option('afbora.blade.templates');
+        $optionPath = option('leitsch.blade.templates');
 
         if ($optionPath !== null && is_dir($optionPath)) {
             if (is_callable($optionPath)) {
@@ -23,7 +23,7 @@ class Paths
 
     public static function getPathViews(): string
     {
-        $path = option('afbora.blade.views');
+        $path = option('leitsch.blade.views');
 
         if (is_callable($path)) {
             return $path();

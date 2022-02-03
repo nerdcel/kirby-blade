@@ -1,6 +1,6 @@
 <?php
 
-namespace Afbora;
+namespace Leitsch\Blade;
 
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Foundation\Application;

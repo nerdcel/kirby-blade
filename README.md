@@ -1,28 +1,20 @@
 # Kirby Blade
 
-[![Source](https://img.shields.io/badge/source-afbora/kirby--blade-blue?style=flat-square)](https://github.com/afbora/kirby-blade)
-[![Download](https://img.shields.io/packagist/dt/afbora/kirby-blade?style=flat-square)](https://github.com/afbora/kirby-blade)
-[![Open Issues](https://img.shields.io/github/issues-raw/afbora/kirby-blade?style=flat-square)](https://github.com/afbora/kirby-blade)
-[![Last Commit](https://img.shields.io/github/last-commit/afbora/kirby-blade?style=flat-square)](https://github.com/afbora/kirby-blade)
-[![Release](https://img.shields.io/github/v/release/afbora/kirby-blade?style=flat-square)](https://github.com/afbora/kirby-blade)
-[![License](https://img.shields.io/github/license/afbora/kirby-blade?style=flat-square)](https://github.com/afbora/kirby-blade)
+[![Source](https://img.shields.io/badge/source-lukasleitsch/kirby--blade-blue?style=flat-square)](https://github.com/lukasleitsch/kirby-blade)
+[![Download](https://img.shields.io/packagist/dt/lukasleitsch/kirby-blade?style=flat-square)](https://github.com/lukasleitsch/kirby-blade)
+[![Open Issues](https://img.shields.io/github/issues-raw/lukasleitsch/kirby-blade?style=flat-square)](https://github.com/lukasleitsch/kirby-blade)
+[![Last Commit](https://img.shields.io/github/last-commit/lukasleitsch/kirby-blade?style=flat-square)](https://github.com/lukasleitsch/kirby-blade)
+[![Release](https://img.shields.io/github/v/release/lukasleitsch/kirby-blade?style=flat-square)](https://github.com/lukasleitsch/kirby-blade)
+[![License](https://img.shields.io/github/license/lukasleitsch/kirby-blade?style=flat-square)](https://github.com/lukasleitsch/kirby-blade)
 
 Kirby Blade use Laravel `illuminate/view` 8.x package and compatible with Kirby 3.
 
-This package enable [Laravel Blade](https://laravel.com/docs/8.x/blade) for your own Kirby applications.
+This package enables [Laravel Blade](https://laravel.com/docs/8.x/blade) for your own Kirby applications.
 
 ## Installation
 
-### Installation with composer
-
 ```ssh
-composer require afbora/kirby-blade
-```
-
-### Add as git submodule
-
-```ssh
-git submodule add https://github.com/afbora/kirby-blade.git site/plugins/kirby-blade
+composer require leitsch/kirby-blade
 ```
 
 ## What is Blade?
@@ -41,14 +33,14 @@ All the documentation about Laravel Blade is in the [official documentation](htt
 
 The default values of the package are:
 
-| Option | Default | Values | Description |
-|:---|:---|:---|:---|
-| afbora.blade.templates | site/templates | (string) | Location of the templates |
-| afbora.blade.views | site/cache/views | (string) | Location of the views cached |
-| afbora.blade.directives | [] | (array) | Array with the custom directives |
-| afbora.blade.ifs | [] | (array) | Array with the custom if statements |
-| afbora.blade.minify.enabled | false | (boolean) | Enable/disable minify HTML output |
-| afbora.blade.minify.options | [] | (array) | Minify supported options |
+| Option                       | Default | Values | Description |
+|:-----------------------------|:---|:---|:---|
+| leitsch.blade.templates      | site/templates | (string) | Location of the templates |
+| leitsch.blade.views          | site/cache/views | (string) | Location of the views cached |
+| leitsch.blade.directives     | [] | (array) | Array with the custom directives |
+| leitsch.blade.ifs            | [] | (array) | Array with the custom if statements |
+| leitsch.blade.minify.enabled | false | (boolean) | Enable/disable minify HTML output |
+| leitsch.blade.minify.options | [] | (array) | Minify supported options |
 
 All the values can be updated in the `config.php` file.
 
@@ -57,26 +49,7 @@ All the values can be updated in the `config.php` file.
 Default templates folder is `site/templates` directory or wherever you define your `templates` directory, but you can change this easily:
 
 ```php
-'afbora.blade.templates' => '/theme/default/templates',
-```
-
-You can find Kirby Starterkit blade templates in repository `/templates` folder.
-
-```
-├── layouts
-│   └── default.blade.php
-├── partials
-│   ├── album.blade.php
-│   ├── image.blade.php
-│   ├── note.blade.php
-│   └── photography.blade.php
-├── about.blade.php
-├── album.blade.php
-├── default.blade.php
-├── home.blade.php
-├── note.blade.php
-├── notes.blade.php
-└── photography.blade.php
+'leitsch.blade.templates' => '/theme/default/templates',
 ```
 
 ### Views
@@ -84,7 +57,7 @@ You can find Kirby Starterkit blade templates in repository `/templates` folder.
 All the views generated are stored in `site/cache/views` directory or wherever you define your `cache` directory, but you can change this easily:
 
 ```php
-'afbora.blade.views' => '/site/storage/views',
+'leitsch.blade.views' => '/site/storage/views',
 ```
 
 ### Directives
@@ -132,7 +105,7 @@ By default Kirby Blade comes with following directives:
 But you can create your own:
 
 ```php
-'afbora.blade.directives' => [
+'leitsch.blade.directives' => [
     'greeting' => function ($text)
     {
         return "<?php echo 'Hello: ' . $text ?>";
@@ -149,7 +122,7 @@ https://getkirby.com/docs/reference/templates/helpers
 Like directives, you can create your own if statements:
 
 ```php
-'afbora.blade.ifs' => [
+'leitsch.blade.ifs' => [
     'logged' => function ()
     {
         return !!kirby()->user();
@@ -176,8 +149,8 @@ After declaration you can use it like:
 **Setup**
 
 ```php
-'afbora.blade.minify.enabled' => true,
-'afbora.blade.minify.options' => [
+'leitsch.blade.minify.enabled' => true,
+'leitsch.blade.minify.options' => [
     'doOptimizeViaHtmlDomParser' => true, // set true/false or remove line to default
     'doRemoveSpacesBetweenTags'  => false // set true/false or remove line to default
 ],
