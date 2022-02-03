@@ -33,7 +33,7 @@ class BladeFactory
         $viewResolver = new EngineResolver;
         $bladeCompiler = new BladeCompiler($filesystem, $pathToCompiledTemplates);
 
-        $viewResolver->register('blade', fn() => new CompilerEngine($bladeCompiler));
+        $viewResolver->register('blade', fn () => new CompilerEngine($bladeCompiler));
 
         $viewFinder = new FileViewFinder($filesystem, $pathsToTemplates);
         $this->viewFactory = new Factory($viewResolver, $viewFinder, $eventDispatcher);
@@ -42,14 +42,21 @@ class BladeFactory
         $container->instance(\Illuminate\Contracts\View\Factory::class, $this->viewFactory);
         $container->alias(
             \Illuminate\Contracts\View\Factory::class,
-            (new class extends View {public static function getFacadeAccessor() { return parent::getFacadeAccessor(); }
+            (new class extends View {
+                public static function getFacadeAccessor()
+                {
+                    return parent::getFacadeAccessor();
+                }
             })::getFacadeAccessor()
         );
         $container->instance(BladeCompiler::class, $bladeCompiler);
         $container->alias(
             BladeCompiler::class,
             (new class extends \Illuminate\Support\Facades\Blade {
-                public static function getFacadeAccessor() { return parent::getFacadeAccessor(); }
+                public static function getFacadeAccessor()
+                {
+                    return parent::getFacadeAccessor();
+                }
             })::getFacadeAccessor()
         );
     }

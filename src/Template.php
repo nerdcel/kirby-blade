@@ -9,7 +9,6 @@ use Kirby\Cms\App as Kirby;
 use Kirby\Cms\Template as KirbyTemplate;
 use Kirby\Toolkit\F;
 use Kirby\Toolkit\Tpl;
-use Kirby\Toolkit\Dir;
 use voku\helper\HtmlMin;
 
 class Template extends KirbyTemplate
@@ -76,6 +75,7 @@ class Template extends KirbyTemplate
                     $htmlMin->{$option}((bool)$status);
                 }
             }
+
             return $htmlMin->minify($html);
         }
 
