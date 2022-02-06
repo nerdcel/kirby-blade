@@ -27,6 +27,7 @@
     "getkirby/composer-installer": "^1.2",
     "illuminate/config": "^8.0",
     "illuminate/view": "^8.0",
+    "ramsey/uuid": "^4.2",
     "voku/html-min": "^4.4"
   },
   "require-dev": {
