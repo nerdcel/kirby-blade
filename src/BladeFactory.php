@@ -19,11 +19,6 @@ class BladeFactory
 {
     static public function register(array $pathsToTemplates, string $pathToCompiledTemplates)
     {
-        // Use Kirby’s internal uuid() helper function instead of
-        // ramsey/uuid to avoid installation of several additional
-        // dependencies.
-        Str::createUuidsUsing('uuid');
-
         $container = App::getInstance();
 
         // we have to bind our app class to the interface
@@ -68,5 +63,10 @@ class BladeFactory
         $config = new Repository();
         $config->set('view.compiled', $pathToCompiledTemplates);
         $container['config'] = $config;
+
+        // Use Kirby’s internal uuid() helper function instead of
+        // ramsey/uuid to avoid installation of several additional
+        // dependencies.
+        Str::createUuidsUsing('uuid');
     }
 }
