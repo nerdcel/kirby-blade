@@ -20,7 +20,7 @@ class BladeFactory
     static public function register(array $pathsToTemplates, string $pathToCompiledTemplates)
     {
         // Use Kirby’s internal uuid() helper function instead of
-        // ramsey/uuid to avoid installtion of several additional
+        // ramsey/uuid to avoid installation of several additional
         // dependencies.
         Str::createUuidsUsing('uuid');
 
