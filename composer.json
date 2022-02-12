@@ -24,8 +24,8 @@
   "require": {
     "php": "^8.0",
     "getkirby/composer-installer": "^1.2",
-    "illuminate/config": "^8.0",
-    "illuminate/view": "^8.0",
+    "illuminate/config": "^9.0",
+    "illuminate/view": "^9.0",
     "voku/html-min": "^4.4"
   },
   "require-dev": {

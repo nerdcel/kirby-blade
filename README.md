@@ -7,9 +7,9 @@
 [![Release](https://img.shields.io/github/v/release/lukasleitsch/kirby-blade?style=flat-square)](https://github.com/lukasleitsch/kirby-blade)
 [![License](https://img.shields.io/github/license/lukasleitsch/kirby-blade?style=flat-square)](https://github.com/lukasleitsch/kirby-blade)
 
-Kirby Blade use Laravel `illuminate/view` 8.x package and compatible with Kirby 3.
+Kirby Blade use Laravel `illuminate/view` 9.x package and compatible with Kirby 3.
 
-This package enables [Laravel Blade](https://laravel.com/docs/8.x/blade) for your own Kirby applications.
+This package enables [Laravel Blade](https://laravel.com/docs/9.x/blade) for your own Kirby applications.
 
 ## Installation
 
@@ -21,13 +21,13 @@ composer require leitsch/kirby-blade
 
 According to Laravel Blade documentation is:
 
-> Blade is the simple, yet powerful templating engine provided with Laravel. Unlike other popular PHP templating engines, Blade does not restrict you from using plain PHP code in your views. In fact, all Blade views are compiled into plain PHP code and cached until they are modified, meaning Blade adds essentially zero overhead to your application. Blade view files use the .blade.php file extension.
+> Blade is the simple, yet powerful templating engine that is included with Laravel. Unlike some PHP templating engines, Blade does not restrict you from using plain PHP code in your templates. In fact, all Blade templates are compiled into plain PHP code and cached until they are modified, meaning Blade adds essentially zero overhead to your application. Blade template files use the .blade.php file extension.
 
 ## Usage
 
-You can use the power of Blade like [Layouts](https://laravel.com/docs/8.x/blade#building-layouts), [Forms](https://laravel.com/docs/8.x/blade#forms), [Sub-Views](https://laravel.com/docs/8.x/blade#including-subviews), [Components](https://laravel.com/docs/8.x/blade#components), [Directives](https://laravel.com/docs/8.x/blade#blade-directives) and your custom if statements.
+You can use the power of Blade like [Layouts](https://laravel.com/docs/9.x/blade#building-layouts), [Forms](https://laravel.com/docs/9.x/blade#forms), [Sub-Views](https://laravel.com/docs/9.x/blade#including-subviews), [Components](https://laravel.com/docs/9.x/blade#components), [Directives](https://laravel.com/docs/9.x/blade#blade-directives) and your custom if statements.
 
-All the documentation about Laravel Blade is in the [official documentation](https://laravel.com/docs/8.x/blade).
+All the documentation about Laravel Blade is in the [official documentation](https://laravel.com/docs/9.x/blade).
 
 ## Options
 
