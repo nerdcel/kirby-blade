@@ -1,7 +1,7 @@
 # Kirby Blade
 
 [![Source](https://img.shields.io/badge/source-lukasleitsch/kirby--blade-blue?style=flat-square)](https://github.com/lukasleitsch/kirby-blade)
-[![Download](https://img.shields.io/packagist/dt/lukasleitsch/kirby-blade?style=flat-square)](https://github.com/lukasleitsch/kirby-blade)
+[![Download](https://img.shields.io/packagist/dt/leitsch/kirby-blade?style=flat-square)](https://github.com/lukasleitsch/kirby-blade)
 [![Open Issues](https://img.shields.io/github/issues-raw/lukasleitsch/kirby-blade?style=flat-square)](https://github.com/lukasleitsch/kirby-blade)
 [![Last Commit](https://img.shields.io/github/last-commit/lukasleitsch/kirby-blade?style=flat-square)](https://github.com/lukasleitsch/kirby-blade)
 [![Release](https://img.shields.io/github/v/release/lukasleitsch/kirby-blade?style=flat-square)](https://github.com/lukasleitsch/kirby-blade)
