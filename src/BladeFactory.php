@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\View;
 use Illuminate\View\Compilers\BladeCompiler;
+use Illuminate\View\DynamicComponent;
 use Illuminate\View\Engines\CompilerEngine;
 use Illuminate\View\Engines\EngineResolver;
 use Illuminate\View\FileViewFinder;
@@ -63,6 +64,8 @@ class BladeFactory
         $config = new Repository();
         $config->set('view.compiled', $pathToCompiledTemplates);
         $container['config'] = $config;
+
+        $bladeCompiler->component('dynamic-component', DynamicComponent::class);
 
         // Use Kirby’s internal uuid() helper function instead of
         // ramsey/uuid to avoid installation of several additional
