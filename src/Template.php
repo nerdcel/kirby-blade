@@ -100,7 +100,7 @@ class Template extends KirbyTemplate
     public function getFilename(string $name = null): string
     {
         if ($name) {
-            return $this->templatesPath . "/" . $name . "." . $this->extension();
+            return $this->templatesPath . "/" . $name . "." . ($this->isBlade() ? $this->bladeExtension() : $this->extension());
         }
 
         if ($this->isBlade()) {
