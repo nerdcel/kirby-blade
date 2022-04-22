@@ -25,13 +25,13 @@ class Template extends KirbyTemplate
 
     public function render(array $data = []): string
     {
-        if ($this->isBlade() && $this->hasDefaultType() === true) {
+        if ($this->isBlade()) {
             View::share('kirby', $data['kirby']);
             View::share('site', $data['site']);
             View::share('pages', $data['pages']);
             View::share('page', $data['page']);
 
-            $html = View::make($this->name, $data)->render();
+            $html = View::file($this->bladeFile(), $data)->render();
         } else {
             $html = Tpl::load($this->file(), $data);
         }
@@ -63,6 +63,41 @@ class Template extends KirbyTemplate
     }
 
     public function file(): ?string
+    {
+        if ($this->hasDefaultType() === true) {
+            try {
+                // Try the default template in the default template directory.
+                return F::realpath($this->getFilename(), $this->templatesPath);
+            } catch (Exception $e) {
+                //
+            }
+
+            // Look for the default template provided by an extension.
+            $path = Kirby::instance()->extension($this->store(), $this->name());
+
+            if ($path !== null) {
+                return $path;
+            }
+        }
+
+        // disallow blade extension for content representation, for ex: /blog.blade
+        if ($this->type() === 'blade') {
+            return null;
+        } else {
+            $name = $this->name() . "." . $this->type();
+        }
+
+        try {
+            // Try the template with type extension in the default template directory.
+            return F::realpath($this->getFilename($name), $this->templatesPath);
+        } catch (Exception $e) {
+            // Look for the template with type extension provided by an extension.
+            // This might be null if the template does not exist.
+            return Kirby::instance()->extension($this->store(), $name);
+        }
+    }
+   
+    public function bladeFile(): ?string
     {
         if ($this->hasDefaultType() === true) {
             try {
