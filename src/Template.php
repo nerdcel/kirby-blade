@@ -35,25 +35,10 @@ class Template extends KirbyTemplate
             View::share('pages', $data['pages']);
             View::share('page', $data['page']);
 
-            $html = View::file($this->file(), $data)->render();
-        } else {
-            $html = Tpl::load($this->file(), $data);
+            return View::file($this->file(), $data)->render();
         }
 
-        if (option('leitsch.blade.minify.enabled', false) === true) {
-            $htmlMin = new HtmlMin();
-            $options = option('leitsch.blade.minify.options', []);
-
-            foreach ($options as $option => $status) {
-                if (method_exists($htmlMin, $option)) {
-                    $htmlMin->{$option}((bool)$status);
-                }
-            }
-
-            return $htmlMin->minify($html);
-        }
-
-        return $html;
+        return Tpl::load($this->file(), $data);
     }
 
     public function isBlade(): bool
@@ -66,9 +51,9 @@ class Template extends KirbyTemplate
         if (! is_null($this->extension)) {
             return $this->extension;
         }
-        
+
         $bladeRoot = $this->templatesPath . "/" . $this->name() . "." . static::EXTENSION_BLADE;
-        
+
         return $this->extension = file_exists($bladeRoot)
             ? static::EXTENSION_BLADE
             : static::EXTENSION_FALLBACK;

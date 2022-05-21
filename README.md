@@ -39,8 +39,6 @@ The default values of the package are:
 | leitsch.blade.views          | site/cache/views | (string) | Location of the views cached |
 | leitsch.blade.directives     | [] | (array) | Array with the custom directives |
 | leitsch.blade.ifs            | [] | (array) | Array with the custom if statements |
-| leitsch.blade.minify.enabled | false | (boolean) | Enable/disable minify HTML output |
-| leitsch.blade.minify.options | [] | (array) | Minify supported options |
 
 All the values can be updated in the `config.php` file.
 
@@ -139,52 +137,6 @@ After declaration you can use it like:
     Please Log In
 @endlogged
 ```
-
-### Filters
-
-**Breaking Change: After the 1.6 version, the filters feature has been removed. Use 1.5.x to use filters.**
-
-### Minify
-
-**Setup**
-
-```php
-'leitsch.blade.minify.enabled' => true,
-'leitsch.blade.minify.options' => [
-    'doOptimizeViaHtmlDomParser' => true, // set true/false or remove line to default
-    'doRemoveSpacesBetweenTags'  => false // set true/false or remove line to default
-],
-```
-
-**Available Minify Options**
-
-| Option | Description |
-|:---|:---|
-| doOptimizeViaHtmlDomParser | optimize html via "HtmlDomParser()" |
-| doRemoveComments | remove default HTML comments (depends on "doOptimizeViaHtmlDomParser(true)") |
-| doSumUpWhitespace | sum-up extra whitespace from the Dom (depends on "doOptimizeViaHtmlDomParser(true)") |
-| doRemoveWhitespaceAroundTags | remove whitespace around tags (depends on "doOptimizeViaHtmlDomParser(true)") |
-| doOptimizeAttributes | optimize html attributes (depends on "doOptimizeViaHtmlDomParser(true)") |
-| doRemoveHttpPrefixFromAttributes | remove optional "http:"-prefix from attributes (depends on "doOptimizeAttributes(true)") |
-| doRemoveHttpsPrefixFromAttributes | remove optional "https:"-prefix from attributes (depends on "doOptimizeAttributes(true)") |
-| doKeepHttpAndHttpsPrefixOnExternalAttributes | keep "http:"- and "https:"-prefix for all external links |
-| doMakeSameDomainsLinksRelative | make some links relative, by removing the domain from attributes |
-| doRemoveDefaultAttributes | remove defaults (depends on "doOptimizeAttributes(true)" | disabled by default) |
-| doRemoveDeprecatedAnchorName | remove deprecated anchor-jump (depends on "doOptimizeAttributes(true)") |
-| doRemoveDeprecatedScriptCharsetAttribute | remove deprecated charset-attribute - the browser will use the charset from the HTTP-Header, anyway (depends on "doOptimizeAttributes(true)") |
-| doRemoveDeprecatedTypeFromScriptTag | remove deprecated script-mime-types (depends on "doOptimizeAttributes(true)") |
-| doRemoveDeprecatedTypeFromStylesheetLink | remove "type=text/css" for css links (depends on "doOptimizeAttributes(true)") |
-| doRemoveDeprecatedTypeFromStyleAndLinkTag | remove "type=text/css" from all links and styles |
-| doRemoveDefaultMediaTypeFromStyleAndLinkTag | remove "media="all" from all links and styles |
-| doRemoveDefaultTypeFromButton | remove type="submit" from button tags |
-| doRemoveEmptyAttributes | remove some empty attributes (depends on "doOptimizeAttributes(true)") |
-| doRemoveValueFromEmptyInput | remove 'value=""' from empty `<input>` (depends on "doOptimizeAttributes(true)") |
-| doSortCssClassNames | sort css-class-names, for better gzip results (depends on "doOptimizeAttributes(true)") |
-| doSortHtmlAttributes | sort html-attributes, for better gzip results (depends on "doOptimizeAttributes(true)") |
-| doRemoveSpacesBetweenTags | remove more (aggressive) spaces in the dom (disabled by default) |
-| doRemoveOmittedQuotes | remove quotes e.g. class="lall" => class=lall |
-| doRemoveOmittedHtmlTags | remove ommitted html tags e.g. \<p\>lall\<\/p\> => \<p\>lall |
-You can get detailed information from `HtmlMin` library: [voku/HtmlMin](https://github.com/voku/HtmlMin#options)
 
 ## Credits
 - [Kirby Blade](https://github.com/afbora/kirby-blade) by [@afbora](https://github.com/afbora)

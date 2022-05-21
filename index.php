@@ -16,10 +16,6 @@ Kirby::plugin('leitsch/blade', [
         },
         'directives' => [],
         'ifs' => [],
-        'minify' => [
-            'enabled' => false,
-            'options' => [],
-        ]
     ],
     'components' => [
         'template' => function (Kirby $kirby, string $name, string $contentType = null) {
