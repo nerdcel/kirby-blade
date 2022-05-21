@@ -4,7 +4,7 @@ namespace Leitsch\Blade;
 
 use Exception;
 use Illuminate\Support\Facades\View;
-use Kirby\Cms\App as Kirby;
+use Kirby\Cms\App;
 use Kirby\Cms\Template as KirbyTemplate;
 use Kirby\Filesystem\F;
 use Kirby\Toolkit\Tpl;
@@ -12,10 +12,14 @@ use voku\helper\HtmlMin;
 
 class Template extends KirbyTemplate
 {
+    public const EXTENSION_BLADE = 'blade.php';
+    public const EXTENSION_FALLBACK = 'php';
+
     protected string $templatesPath;
     protected string $viewsPath;
+    protected ?string $extension = null;
 
-    public function __construct(Kirby $kirby, string $name, string $type = 'html', string $defaultType = 'html')
+    public function __construct(App $kirby, string $name, string $type = 'html', string $defaultType = 'html')
     {
         parent::__construct($name, $type, $defaultType);
 
@@ -25,13 +29,13 @@ class Template extends KirbyTemplate
 
     public function render(array $data = []): string
     {
-        if ($this->isBlade() && $this->hasDefaultType() === true) {
+        if ($this->isBlade()) {
             View::share('kirby', $data['kirby']);
             View::share('site', $data['site']);
             View::share('pages', $data['pages']);
             View::share('page', $data['page']);
 
-            $html = View::make($this->name, $data)->render();
+            $html = View::file($this->file(), $data)->render();
         } else {
             $html = Tpl::load($this->file(), $data);
         }
@@ -54,12 +58,20 @@ class Template extends KirbyTemplate
 
     public function isBlade(): bool
     {
-        return file_exists($this->templatesPath . "/" . $this->name() . "." . $this->bladeExtension());
+        return $this->extension() === static::EXTENSION_BLADE;
     }
 
-    public function bladeExtension(): string
+    public function extension(): string
     {
-        return 'blade.php';
+        if (! is_null($this->extension)) {
+            return $this->extension;
+        }
+        
+        $bladeRoot = $this->templatesPath . "/" . $this->name() . "." . static::EXTENSION_BLADE;
+        
+        return $this->extension = file_exists($bladeRoot)
+            ? static::EXTENSION_BLADE
+            : static::EXTENSION_FALLBACK;
     }
 
     public function file(): ?string
@@ -73,7 +85,7 @@ class Template extends KirbyTemplate
             }
 
             // Look for the default template provided by an extension.
-            $path = Kirby::instance()->extension($this->store(), $this->name());
+            $path = App::instance()->extension($this->store(), $this->name());
 
             if ($path !== null) {
                 return $path;
@@ -93,20 +105,13 @@ class Template extends KirbyTemplate
         } catch (Exception $e) {
             // Look for the template with type extension provided by an extension.
             // This might be null if the template does not exist.
-            return Kirby::instance()->extension($this->store(), $name);
+            return App::instance()->extension($this->store(), $name);
         }
     }
 
-    public function getFilename(string $name = null): string
+    public function getFilename(?string $name = null): string
     {
-        if ($name) {
-            return $this->templatesPath . "/" . $name . "." . ($this->isBlade() ? $this->bladeExtension() : $this->extension());
-        }
-
-        if ($this->isBlade()) {
-            return $this->templatesPath . "/" . $this->name() . "." . $this->bladeExtension();
-        }
-
-        return $this->templatesPath . "/" . $this->name() . "." . $this->extension();
+        $name = $name ?? $this->name();
+        return "{$this->templatesPath}/{$name}.{$this->extension()}";
     }
 }
