@@ -8,8 +8,8 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Facade;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 use Illuminate\View\Compilers\BladeCompiler;
 use Illuminate\View\DynamicComponent;
 use Illuminate\View\Engines\CompilerEngine;
@@ -18,7 +18,7 @@ use Illuminate\View\FileViewFinder;
 
 class BladeFactory
 {
-    static public function register(array $pathsToTemplates, string $pathToCompiledTemplates)
+    public static function register(array $pathsToTemplates, string $pathToCompiledTemplates)
     {
         $container = App::getInstance();
 

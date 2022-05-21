@@ -8,7 +8,6 @@ use Kirby\Cms\App;
 use Kirby\Cms\Template as KirbyTemplate;
 use Kirby\Filesystem\F;
 use Kirby\Toolkit\Tpl;
-use voku\helper\HtmlMin;
 
 class Template extends KirbyTemplate
 {
@@ -97,6 +96,7 @@ class Template extends KirbyTemplate
     public function getFilename(?string $name = null): string
     {
         $name = $name ?? $this->name();
+
         return "{$this->templatesPath}/{$name}.{$this->extension()}";
     }
 }
