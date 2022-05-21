@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\Blade;
 
 class BladeDirectives
 {
-    public static function register() {
+    public static function register()
+    {
         Blade::directive('asset', function (string $path) {
             return "<?php echo asset($path) ?>";
         });
