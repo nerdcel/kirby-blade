@@ -20,6 +20,9 @@ composer require leitsch/kirby-blade
 Laravel and Kirby both define the `e()` helper function, but they do vastly different things. In Kirby, `e()` is basically just a shortcut for `echo $condition ? $a : $b;`. In Laravel, this function escapes HTML characters in a string. To avoid problems for existing projects and third-party plugins, you should add the lines below to your `index.php` file before requiring `autoload.php`:
 
 ```php
+
+define('KIRBY_HELPER_E', false);
+
 /**
  * Smart version of echo with an if condition as first argument. This function
  * must be defined in `index.php` to avoid it being overridden by Laravel, because
