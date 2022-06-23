@@ -17,28 +17,7 @@ This package enables [Laravel Blade](https://laravel.com/docs/9.x/blade) for you
 composer require leitsch/kirby-blade
 ```
 
-Laravel and Kirby both define the `e()` helper function, but they do vastly different things. In Kirby, `e()` is basically just a shortcut for `echo $condition ? $a : $b;`. In Laravel, this function escapes HTML characters in a string. To avoid problems for existing projects and third-party plugins, you should add the lines below to your `index.php` file before requiring `autoload.php`:
-
-```php
-
-define('KIRBY_HELPER_E', false);
-
-/**
- * Smart version of echo with an if condition as first argument. This function
- * must be defined in `index.php` to avoid it being overridden by Laravel, because
- * of the order in which Composer laods the helper functions of Laravel and Kirby.
- *
- * @param mixed $condition
- * @param mixed $value The string to be echoed if the condition is true
- * @param mixed $alternative An alternative string which should be echoed when the condition is false
- */
-function e($condition, $value, $alternative = null)
-{
-    echo $condition ? $value : $alternative;
-}
-```
-
-If you are sure, that Kirby’s `e()` helper is never used in you project, you can simply Kirby’s function by adding a single line of code instead:
+**Caveat:** Laravel and Kirby both define the `e()` helper function, but they do vastly different things. In Kirby, `e()` is basically just a shortcut for `echo $condition ? $a : $b;`. In Laravel, this function escapes HTML characters in a string. From Kirby 3.7 and up, you have to disable Kirby’s own `e()` helper by adding a single line of code to your `index.php`, before including the `autoload.php` file:
 
 ```php
 define('KIRBY_HELPER_E', false);
