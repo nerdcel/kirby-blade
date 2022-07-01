@@ -52,23 +52,9 @@ class Template extends KirbyTemplate
             return $this->extension;
         }
 
-
-        $bladeRoot = $this->templatesPath . "/" . $this->name() . "." . static::EXTENSION_BLADE;
-        $fallbackRoot = $this->templatesPath . "/" . $this->name() . "." . static::EXTENSION_FALLBACK;
-        $bladeExists = file_exists($bladeRoot);
-
-        if ($bladeExists || file_exists($fallbackRoot)) {
-            // template from templates folder
-            $this->extension = $bladeExists ? static::EXTENSION_BLADE : static::EXTENSION_FALLBACK;
-        } elseif ($path = App::instance()->extension($this->store(), $this->name())) {
-            // template from plugin
-            $this->extension = str_ends_with($path, static::EXTENSION_BLADE) ? static::EXTENSION_BLADE : static::EXTENSION_FALLBACK;
-        } else {
-            // No matching template found, fall back to default extension
-            $this->extension = static::EXTENSION_FALLBACK;
-        }
-
-        return $this->extension;
+        return $this->extension = file_exists($this->file())
+            ? static::EXTENSION_BLADE
+            : static::EXTENSION_FALLBACK;
     }
 
     public function file(): ?string
@@ -78,8 +64,8 @@ class Template extends KirbyTemplate
 
             try {
                 // Try the default template in the default template directory.
-                return F::realpath($this->getFilename(), $this->templatesPath);
-            } catch (Exception $e) {
+                return F::realpath($this->getFilename($this->name(), self::EXTENSION_FALLBACK), $this->templatesPath);
+            } catch (Exception) {
                 // ignore errors, continue searching
             }
 
@@ -91,8 +77,7 @@ class Template extends KirbyTemplate
             }
         }
 
-        // try to load content represenation instead
-
+        // try to load content representation instead
         // disallow blade extension for content representation, for ex: /blog.blade
         if ($this->type() === 'blade') {
             return null;
@@ -102,18 +87,16 @@ class Template extends KirbyTemplate
 
         try {
             // Try the template with type extension in the default template directory.
-            return F::realpath($this->getFilename($name), $this->templatesPath);
-        } catch (Exception $e) {
+            return F::realpath($this->getFilename($name, self::EXTENSION_BLADE), $this->templatesPath);
+        } catch (Exception) {
             // Look for the template with type extension provided by an extension.
             // This might be null if the template does not exist.
             return App::instance()->extension($this->store(), $name);
         }
     }
 
-    public function getFilename(?string $name = null): string
+    public function getFilename(string $name, string $extension): string
     {
-        $name = $name ?? $this->name();
-
-        return "{$this->templatesPath}/{$name}.{$this->extension()}";
+        return "{$this->templatesPath}/{$name}.{$extension}";
     }
 }
