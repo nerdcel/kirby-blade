@@ -8,6 +8,7 @@ use Kirby\Cms\App;
 use Kirby\Cms\Template as KirbyTemplate;
 use Kirby\Filesystem\F;
 use Kirby\Toolkit\Tpl;
+use Stringable;
 
 class Template extends KirbyTemplate
 {
@@ -48,24 +49,39 @@ class Template extends KirbyTemplate
     public function extension(): string
     {
         if (! is_null($this->extension)) {
+            // return from cache
             return $this->extension;
         }
 
-        $bladeRoot = $this->templatesPath . "/" . $this->name() . "." . static::EXTENSION_BLADE;
 
-        return $this->extension = file_exists($bladeRoot)
-            ? static::EXTENSION_BLADE
-            : static::EXTENSION_FALLBACK;
+        $bladeRoot = $this->templatesPath . "/" . $this->name() . "." . static::EXTENSION_BLADE;
+        $fallbackRoot = $this->templatesPath . "/" . $this->name() . "." . static::EXTENSION_FALLBACK;
+        $bladeExists = file_exists($bladeRoot);
+
+        if ($bladeExists || file_exists($fallbackRoot)) {
+            // template from templates folder
+            $this->extension = $bladeExists ? static::EXTENSION_BLADE : static::EXTENSION_FALLBACK;
+        } else if ($path = App::instance()->extension($this->store(), $this->name())) {
+            // template from plugin
+            $this->extension = str_ends_with($path, static::EXTENSION_BLADE) ? static::EXTENSION_BLADE : static::EXTENSION_FALLBACK;
+        } else {
+            // No matching template found, fall back to default extension
+            $this->extension = static::EXTENSION_FALLBACK;
+        }
+
+        return $this->extension;
     }
 
     public function file(): ?string
     {
         if ($this->hasDefaultType() === true) {
+            // default type template (i.e. not a content representation)
+
             try {
                 // Try the default template in the default template directory.
                 return F::realpath($this->getFilename(), $this->templatesPath);
             } catch (Exception $e) {
-                //
+                // ignore errors, continue searching
             }
 
             // Look for the default template provided by an extension.
@@ -75,6 +91,8 @@ class Template extends KirbyTemplate
                 return $path;
             }
         }
+
+        // try to load content represenation instead
 
         // disallow blade extension for content representation, for ex: /blog.blade
         if ($this->type() === 'blade') {
