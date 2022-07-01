@@ -23,6 +23,7 @@
   ],
   "require": {
     "php": "^8.0",
+    "getkirby/cms": ">=3.6.0",
     "getkirby/composer-installer": "^1.2",
     "illuminate/config": "^9.0",
     "illuminate/view": "^9.0"
