@@ -33,7 +33,11 @@ $rules = [
 
 $finder = Finder::create()
     ->in([
-        __DIR__ . '/src',
+        __DIR__,
+    ])
+    ->exclude([
+        'kirby',
+        'vendor',
     ])
     ->name('*.php')
     ->notName('*.blade.php')

@@ -8,7 +8,6 @@ use Kirby\Cms\App;
 use Kirby\Cms\Template as KirbyTemplate;
 use Kirby\Filesystem\F;
 use Kirby\Toolkit\Tpl;
-use Stringable;
 
 class Template extends KirbyTemplate
 {
@@ -61,7 +60,7 @@ class Template extends KirbyTemplate
         if ($bladeExists || file_exists($fallbackRoot)) {
             // template from templates folder
             $this->extension = $bladeExists ? static::EXTENSION_BLADE : static::EXTENSION_FALLBACK;
-        } else if ($path = App::instance()->extension($this->store(), $this->name())) {
+        } elseif ($path = App::instance()->extension($this->store(), $this->name())) {
             // template from plugin
             $this->extension = str_ends_with($path, static::EXTENSION_BLADE) ? static::EXTENSION_BLADE : static::EXTENSION_FALLBACK;
         } else {
