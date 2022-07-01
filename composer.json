@@ -19,8 +19,20 @@
     {
       "name": "Lukas Leitsch",
       "email": "lukas@leitsch.org"
+    },
+    {
+      "name": "Fabian Michael",
+      "email": "hallo@fabianmichael.de"
+    },
+    {
+      "name": "Ahmet Bora",
+      "email": "ahmet@getkirby.com"
     }
   ],
+  "scripts": {
+    "cs-fixer": "vendor/bin/php-cs-fixer fix --dry-run --diff",
+    "cs-fixer-fix": "vendor/bin/php-cs-fixer fix --diff"
+  },
   "require": {
     "php": "^8.0",
     "getkirby/composer-installer": "^1.2",

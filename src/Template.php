@@ -48,34 +48,30 @@ class Template extends KirbyTemplate
     public function extension(): string
     {
         if (! is_null($this->extension)) {
+            // return from cache
             return $this->extension;
         }
 
-        $bladeRoot = $this->templatesPath . "/" . $this->name() . "." . static::EXTENSION_BLADE;
+        $filename = $this->file();
 
-        return $this->extension = file_exists($bladeRoot)
+        return $this->extension = str_ends_with($filename, self::EXTENSION_BLADE) && file_exists($filename)
             ? static::EXTENSION_BLADE
             : static::EXTENSION_FALLBACK;
     }
 
     public function file(): ?string
     {
-        if ($this->hasDefaultType() === true) {
-            try {
-                // Try the default template in the default template directory.
-                return F::realpath($this->getFilename(), $this->templatesPath);
-            } catch (Exception $e) {
-                //
-            }
-
-            // Look for the default template provided by an extension.
-            $path = App::instance()->extension($this->store(), $this->name());
+        // default type template (i.e. not a content representation)
+        // Look for the default template provided by an extension.
+        if ($this->hasDefaultType()) {
+            $path = $this->getFilename($this->name());
 
             if ($path !== null) {
                 return $path;
             }
         }
 
+        // try to load content representation instead
         // disallow blade extension for content representation, for ex: /blog.blade
         if ($this->type() === 'blade') {
             return null;
@@ -83,20 +79,27 @@ class Template extends KirbyTemplate
             $name = $this->name() . "." . $this->type();
         }
 
-        try {
-            // Try the template with type extension in the default template directory.
-            return F::realpath($this->getFilename($name), $this->templatesPath);
-        } catch (Exception $e) {
-            // Look for the template with type extension provided by an extension.
-            // This might be null if the template does not exist.
-            return App::instance()->extension($this->store(), $name);
-        }
+        return $this->getFilename($name);
     }
 
-    public function getFilename(?string $name = null): string
+    public function getFilename(string $name): ?string
     {
-        $name = $name ?? $this->name();
+        try {
+            // Try the default blade template in the default template directory.
+            return F::realpath("{$this->templatesPath}/{$name}." . self::EXTENSION_BLADE, $this->templatesPath);
+        } catch (Exception) {
+            // ignore errors, continue searching
+        }
 
-        return "{$this->templatesPath}/{$name}.{$this->extension()}";
+        try {
+            // Try the default vanilla php template in the default template directory.
+            return F::realpath("{$this->templatesPath}/{$name}." .  self::EXTENSION_FALLBACK, $this->templatesPath);
+        } catch (Exception) {
+            // ignore errors, continue searching
+        }
+
+        // Look for the template with type extension provided by an extension.
+        // This might be null if the template does not exist.
+        return App::instance()->extension($this->store(), $name);
     }
 }

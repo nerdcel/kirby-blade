@@ -14,7 +14,7 @@ use Illuminate\View\ComponentAttributeBag;
 if (! function_exists('component')) {
     function component($name, $props = [], $attributes = [])
     {
-        $className = collect(explode('.', $name))->map(fn($part) => Str::studly($part))->join('\\');
+        $className = collect(explode('.', $name))->map(fn ($part) => Str::studly($part))->join('\\');
         $className = "App\\View\\Components\\{$className}";
 
         if (class_exists($className)) {
