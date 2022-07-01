@@ -52,25 +52,19 @@ class Template extends KirbyTemplate
             return $this->extension;
         }
 
-        return $this->extension = file_exists($this->file())
+        $filename = $this->file();
+
+        return $this->extension = str_ends_with($filename, self::EXTENSION_BLADE) && file_exists($filename)
             ? static::EXTENSION_BLADE
             : static::EXTENSION_FALLBACK;
     }
 
     public function file(): ?string
     {
-        if ($this->hasDefaultType() === true) {
-            // default type template (i.e. not a content representation)
-
-            try {
-                // Try the default template in the default template directory.
-                return F::realpath($this->getFilename($this->name(), self::EXTENSION_FALLBACK), $this->templatesPath);
-            } catch (Exception) {
-                // ignore errors, continue searching
-            }
-
-            // Look for the default template provided by an extension.
-            $path = App::instance()->extension($this->store(), $this->name());
+        // default type template (i.e. not a content representation)
+        // Look for the default template provided by an extension.
+        if ($this->hasDefaultType()) {
+            $path = $this->getFilename($this->name());
 
             if ($path !== null) {
                 return $path;
@@ -85,18 +79,27 @@ class Template extends KirbyTemplate
             $name = $this->name() . "." . $this->type();
         }
 
-        try {
-            // Try the template with type extension in the default template directory.
-            return F::realpath($this->getFilename($name, self::EXTENSION_BLADE), $this->templatesPath);
-        } catch (Exception) {
-            // Look for the template with type extension provided by an extension.
-            // This might be null if the template does not exist.
-            return App::instance()->extension($this->store(), $name);
-        }
+        return $this->getFilename($name);
     }
 
-    public function getFilename(string $name, string $extension): string
+    public function getFilename(string $name): ?string
     {
-        return "{$this->templatesPath}/{$name}.{$extension}";
+        try {
+            // Try the default blade template in the default template directory.
+            return F::realpath("{$this->templatesPath}/{$name}." . self::EXTENSION_BLADE, $this->templatesPath);
+        } catch (Exception) {
+            // ignore errors, continue searching
+        }
+
+        try {
+            // Try the default vanilla php template in the default template directory.
+            return F::realpath("{$this->templatesPath}/{$name}." .  self::EXTENSION_FALLBACK, $this->templatesPath);
+        } catch (Exception) {
+            // ignore errors, continue searching
+        }
+
+        // Look for the template with type extension provided by an extension.
+        // This might be null if the template does not exist.
+        return App::instance()->extension($this->store(), $name);
     }
 }
