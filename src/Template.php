@@ -34,10 +34,12 @@ class Template extends KirbyTemplate
             View::share('pages', $data['pages']);
             View::share('page', $data['page']);
 
-            return View::file($this->file(), $data)->render();
+            $html = View::file($this->file(), $data)->render();
+        } else {
+            $html = Tpl::load($this->file(), $data);
         }
 
-        return Tpl::load($this->file(), $data);
+        return App::instance()->apply('blade.render:after', compact('html'), 'html');
     }
 
     public function isBlade(): bool

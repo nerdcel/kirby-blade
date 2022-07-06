@@ -144,6 +144,29 @@ After declaration you can use it like:
 @endlogged
 ```
 
+### Hook
+
+For use cases such as HTML minification, there's a custom hook for manipulating rendered HTML output:
+
+```php
+# site/config/config.php
+
+# For this example, we are using 'voku/html-min'
+use voku\helper\HtmlMin;
+
+return [
+    # ...
+
+    'hooks' => [
+        'blade.render:after' => function (string $html): string {
+            return (new HtmlMin())->minify($html);
+        },
+    ],
+
+    # ...
+];
+```
+
 ## Credits
 - [Kirby Blade](https://github.com/afbora/kirby-blade) by [@afbora](https://github.com/afbora)
 - [Torch](https://github.com/mattstauffer/Torch) by [@mattstauffer](https://github.com/mattstauffer)
