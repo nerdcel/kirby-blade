@@ -69,7 +69,7 @@ class BladeFactory
         $container['config'] = $config;
 
         $bladeCompiler->component(DynamicComponent::class, 'dynamic-component');
-        
+
         foreach ($components as $name => $class) {
             $bladeCompiler->component($name, $class);
         }
