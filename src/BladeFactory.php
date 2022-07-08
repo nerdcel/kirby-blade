@@ -18,8 +18,11 @@ use Illuminate\View\FileViewFinder;
 
 class BladeFactory
 {
-    public static function register(array $pathsToTemplates, string $pathToCompiledTemplates)
-    {
+    public static function register(
+        array $pathsToTemplates,
+        string $pathToCompiledTemplates,
+        array $components
+    ) {
         $container = App::getInstance();
 
         // we have to bind our app class to the interface
@@ -65,7 +68,12 @@ class BladeFactory
         $config->set('view.compiled', $pathToCompiledTemplates);
         $container['config'] = $config;
 
-        $bladeCompiler->component('dynamic-component', DynamicComponent::class);
+        $bladeCompiler->component(DynamicComponent::class, 'dynamic-component');
+        
+        foreach ($components as $name => $class) {
+            $bladeCompiler->component($name, $class);
+        }
+        // exit;
 
         // Use Kirby’s internal uuid() helper function instead of
         // ramsey/uuid to avoid installation of several additional
