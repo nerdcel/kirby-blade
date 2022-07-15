@@ -39,7 +39,7 @@ class BladeFactory
 
         $viewResolver->register('blade', fn () => new CompilerEngine($bladeCompiler));
 
-        $viewFinder = new class($filesystem, $pathsToTemplates) extends FileViewFinder {
+        $viewFinder = new class ($filesystem, $pathsToTemplates) extends FileViewFinder {
             // public function find($name) {
             //     die("findo: $name :");
 
