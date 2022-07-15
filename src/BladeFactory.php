@@ -39,7 +39,25 @@ class BladeFactory
 
         $viewResolver->register('blade', fn () => new CompilerEngine($bladeCompiler));
 
-        $viewFinder = new FileViewFinder($filesystem, $pathsToTemplates);
+        $viewFinder = new class($filesystem, $pathsToTemplates) extends FileViewFinder {
+            // public function find($name) {
+            //     die("findo: $name :");
+
+            //     if (isset($this->views[$name])) {
+            //         return $this->views[$name];
+            //     }
+
+            //     $class = str_replace(['.', '-', '_'], '', $name) . 'Component';
+
+            //     if (class_exists($class)) {
+            //         return $this->views[$name] = $class;
+            //     }
+
+            //     die("❌ no co | {$class} | {$name}");
+
+            //     return parent::find($name);
+            // }
+        };
         $viewFactory = new \Illuminate\View\Factory($viewResolver, $viewFinder, $eventDispatcher);
         $viewFactory->setContainer($container);
         Facade::setFacadeApplication($container);
@@ -73,7 +91,6 @@ class BladeFactory
         foreach ($components as $name => $class) {
             $bladeCompiler->component($name, $class);
         }
-        // exit;
 
         // Use Kirby’s internal uuid() helper function instead of
         // ramsey/uuid to avoid installation of several additional
