@@ -1,15 +1,10 @@
 <?php
 
 use Kirby\Cms\App as Kirby;
-use Kirby\Cms\App;
-use Kirby\Filesystem\Dir;
-use Kirby\Filesystem\F;
 use Kirby\Toolkit\A;
-use Kirby\Toolkit\Str;
 use Leitsch\Blade\BladeDirectives;
 use Leitsch\Blade\BladeFactory;
 use Leitsch\Blade\BladeIfStatements;
-use Leitsch\Blade\Helpers;
 use Leitsch\Blade\Paths;
 use Leitsch\Blade\Snippet;
 use Leitsch\Blade\Template;
@@ -39,7 +34,7 @@ Kirby::plugin('leitsch/blade', [
             $templatePaths = [];
 
             // stuff from other plugins
-            foreach (App::instance()->plugins() as $plugin) {
+            foreach (kirby()->plugins() as $plugin) {
                 $extends = $plugin->extends();
                 $componentModels = array_merge($componentModels, array_flip(A::get($extends, 'blade.components', [])));
                 $componentNamespaces = array_merge($componentNamespaces, A::get($extends, 'blade.namespaces', []));
