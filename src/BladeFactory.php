@@ -21,7 +21,8 @@ class BladeFactory
     public static function register(
         array $pathsToTemplates,
         string $pathToCompiledTemplates,
-        array $components
+        array $components,
+        array $namespaces
     ) {
         $container = App::getInstance();
 
@@ -90,6 +91,10 @@ class BladeFactory
 
         foreach ($components as $name => $class) {
             $bladeCompiler->component($name, $class);
+        }
+
+        foreach ($namespaces as $prefix => $namespace) {
+            $bladeCompiler->componentNamespace($namespace, $prefix);
         }
 
         // Use Kirby’s internal uuid() helper function instead of

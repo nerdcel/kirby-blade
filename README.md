@@ -193,7 +193,7 @@ You can also register components from other plugins. This allows you to define t
 use My\Plugin\BladeComponents\LanguageToggle;
 
 Kirby::plugin('my/plugin', [
-    'bladeComponents' => [
+    'blade.components' => [
         'language-toggle' => LanguageToggle::class,
     ],
 ]);

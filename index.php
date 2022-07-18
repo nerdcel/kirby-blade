@@ -4,6 +4,7 @@ use Kirby\Cms\App as Kirby;
 use Kirby\Cms\App;
 use Kirby\Filesystem\Dir;
 use Kirby\Filesystem\F;
+use Kirby\Toolkit\A;
 use Kirby\Toolkit\Str;
 use Leitsch\Blade\BladeDirectives;
 use Leitsch\Blade\BladeFactory;
@@ -14,15 +15,6 @@ use Leitsch\Blade\Snippet;
 use Leitsch\Blade\Template;
 
 @include_once __DIR__ . '/vendor/autoload.php';
-
-/**
- * Don’t use class_alias here, because that would break autocomplete
- * in most IDEs.
- */
-abstract class BladeComponent extends Illuminate\View\Component
-{
-
-}
 
 Kirby::plugin('leitsch/blade', [
     'options' => [
@@ -42,52 +34,23 @@ Kirby::plugin('leitsch/blade', [
     ],
     'hooks' => [
         'system.loadPlugins:after' => function () {
-
             $componentModels = [];
+            $componentNamespaces = [];
+            $templatePaths = [];
 
-            // load components from `site/components` directory (basically works
-            // like page models)
-            // site/components/demo.php => \DemoComponent
-            // site/components/demo/sub.php => \Demo_SubComponent
-            // site/components/demo/sub/sub.php => \Demo_Sub_SubComponent
-            $path = $this->root('site') . '/components';
-
-            foreach (Dir::index($path, true) as $model) {
-                if (pathinfo($model, PATHINFO_EXTENSION) !== 'php') {
-                    continue;
-                }
-
-                $parts = ltrim(Str::after($model, $path), '/');
-                $parts = explode('/', $parts);
-                $last = count($parts) - 1;
-                $parts[$last] = F::name($parts[$last]);
-
-                $class = implode('_', array_map(fn($item) => str_replace(['.', '-', '_'], '', $item), $parts)) . 'Component';
-                $name = implode('.', $parts);
-
-                // load the model class
-                F::loadOnce($path . '/' . $model);
-
-                if (class_exists($class)) {
-                    // ensure to register a fully-qualifield classname including
-                    // namespace, so it works in any namespace
-                    $r = new ReflectionClass($class);
-                    $componentModels[$r->getNamespaceName() . '\\' . $r->getName()] = $name;
-                }
-            }
-
-            // get components that have been registred by other plugins
+            // stuff from other plugins
             foreach (App::instance()->plugins() as $plugin) {
-                $componentModels = array_merge(
-                    $componentModels,
-                    array_flip($plugin->extends()['bladeComponents'] ?? []),
-                );
+                $extends = $plugin->extends();
+                $componentModels = array_merge($componentModels, array_flip(A::get($extends, 'blade.components', [])));
+                $componentNamespaces = array_merge($componentNamespaces, A::get($extends, 'blade.namespaces', []));
+                $templatePaths = array_merge($templatePaths, A::wrap(A::get($extends, 'blade.templates', [])));
             }
 
             BladeFactory::register(
-                [Paths::getPathTemplates()],
+                array_merge([Paths::getPathTemplates()], $templatePaths),
                 Paths::getPathViews(),
-                $componentModels
+                $componentModels,
+                $componentNamespaces
             );
             BladeDirectives::register();
             BladeIfStatements::register();
