@@ -26,7 +26,7 @@ class Snippet
             }
         }
 
-        if (str_ends_with($file, Template::EXTENSION_BLADE)) {
+        if (str_ends_with($file ?? '', Template::EXTENSION_BLADE)) {
             // blade snippet
             return View::file($file, $this->data)->render();
         }
