@@ -8,7 +8,7 @@ class Paths
     {
         $optionPath = option('leitsch.blade.templates');
 
-        if ($optionPath !== null && is_dir($optionPath)) {
+        if ($optionPath !== null) {
             if (is_callable($optionPath)) {
                 return $optionPath();
             }
