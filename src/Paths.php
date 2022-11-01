@@ -6,19 +6,17 @@ class Paths
 {
     public static function getPathTemplates(): string
     {
-        $optionPath = option('leitsch.blade.templates');
+        $path = option('leitsch.blade.templates');
 
-        if ($optionPath !== null && is_dir($optionPath)) {
-            if (is_callable($optionPath)) {
-                return $optionPath();
-            }
-
-            $path = kirby()->roots()->index() . "/" . $optionPath;
-        } else {
-            $path = kirby()->root('templates');
+        if (is_callable($path)) {
+            return $path();
         }
 
-        return $path;
+        if ($path !== null) {
+            return kirby()->roots()->index() . '/' . $path;
+        }
+
+        return kirby()->root('templates');
     }
 
     public static function getPathViews(): string
