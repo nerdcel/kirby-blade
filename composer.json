@@ -60,7 +60,7 @@
       "helpers.php"
     ]
   },
-  "minimum-stability": "rc",
+  "minimum-stability": "RC",
   "prefer-stable": true,
   "extra": {
     "installer-name": "blade",
