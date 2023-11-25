@@ -5,7 +5,7 @@ namespace Leitsch\Blade;
 use Exception;
 use Illuminate\Support\Facades\View;
 use Kirby\Cms\App;
-use Kirby\Cms\Template as KirbyTemplate;
+use Kirby\Template\Template as KirbyTemplate;
 use Kirby\Filesystem\F;
 use Kirby\Toolkit\Tpl;
 
