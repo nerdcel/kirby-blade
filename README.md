@@ -7,7 +7,7 @@
 [![Release](https://img.shields.io/github/v/release/lukasleitsch/kirby-blade?style=flat-square)](https://github.com/lukasleitsch/kirby-blade)
 [![License](https://img.shields.io/github/license/lukasleitsch/kirby-blade?style=flat-square)](https://github.com/lukasleitsch/kirby-blade)
 
-Kirby Blade use Laravel `illuminate/view` 9.x package and compatible with Kirby 3.
+Kirby Blade use Laravel `illuminate/view` 10.x package and compatible with Kirby 4.
 
 This package enables [Laravel Blade](https://laravel.com/docs/9.x/blade) for your own Kirby applications.
 
