@@ -43,7 +43,8 @@ class BladeFactory
         $container->instance(Factory::class, $viewFactory);
         $container->alias(
             Factory::class,
-            (new class extends View {
+            (new class extends View
+            {
                 public static function getFacadeAccessor()
                 {
                     return parent::getFacadeAccessor();
@@ -53,7 +54,8 @@ class BladeFactory
         $container->instance(BladeCompiler::class, $bladeCompiler);
         $container->alias(
             BladeCompiler::class,
-            (new class extends \Illuminate\Support\Facades\Blade {
+            (new class extends \Illuminate\Support\Facades\Blade
+            {
                 public static function getFacadeAccessor()
                 {
                     return parent::getFacadeAccessor();

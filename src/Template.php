@@ -5,17 +5,20 @@ namespace Leitsch\Blade;
 use Exception;
 use Illuminate\Support\Facades\View;
 use Kirby\Cms\App;
-use Kirby\Template\Template as KirbyTemplate;
 use Kirby\Filesystem\F;
+use Kirby\Template\Template as KirbyTemplate;
 use Kirby\Toolkit\Tpl;
 
 class Template extends KirbyTemplate
 {
     public const EXTENSION_BLADE = 'blade.php';
+
     public const EXTENSION_FALLBACK = 'php';
 
     protected string $templatesPath;
+
     protected string $viewsPath;
+
     protected ?string $extension = null;
 
     public function __construct(App $kirby, string $name, string $type = 'html', string $defaultType = 'html')
@@ -78,7 +81,7 @@ class Template extends KirbyTemplate
         if ($this->type() === 'blade') {
             return null;
         } else {
-            $name = $this->name() . "." . $this->type();
+            $name = $this->name().'.'.$this->type();
         }
 
         return $this->getFilename($name);
@@ -88,14 +91,14 @@ class Template extends KirbyTemplate
     {
         try {
             // Try the default blade template in the default template directory.
-            return F::realpath("{$this->templatesPath}/{$name}." . self::EXTENSION_BLADE, $this->templatesPath);
+            return F::realpath("{$this->templatesPath}/{$name}.".self::EXTENSION_BLADE, $this->templatesPath);
         } catch (Exception) {
             // ignore errors, continue searching
         }
 
         try {
             // Try the default vanilla php template in the default template directory.
-            return F::realpath("{$this->templatesPath}/{$name}." .  self::EXTENSION_FALLBACK, $this->templatesPath);
+            return F::realpath("{$this->templatesPath}/{$name}.".self::EXTENSION_FALLBACK, $this->templatesPath);
         } catch (Exception) {
             // ignore errors, continue searching
         }

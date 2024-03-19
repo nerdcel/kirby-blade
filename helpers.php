@@ -6,9 +6,10 @@ use Illuminate\View\ComponentAttributeBag;
 
 /**
  * Render a blade component.
- * @param string $name Component name, exclude component folder (i.e use "card" instead of "components.card")
- * @param array $props Component properties
- * @param array $attributes Component attributes
+ *
+ * @param  string  $name  Component name, exclude component folder (i.e use "card" instead of "components.card")
+ * @param  array  $props  Component properties
+ * @param  array  $attributes  Component attributes
  * @return \Illuminate\Contracts\View\View
  */
 if (! function_exists('component')) {

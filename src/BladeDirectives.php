@@ -18,7 +18,7 @@ class BladeDirectives
 
         Blade::directive('csrf', function (string $expression) {
             if (strlen($expression) === 0) {
-                return "<?php echo csrf() ?>";
+                return '<?php echo csrf() ?>';
             }
 
             return "<?php echo csrf({$expression}) ?>";
@@ -129,7 +129,7 @@ class BladeDirectives
         });
 
         Blade::directive('uuid', function () {
-            return "<?php echo uuid() ?>";
+            return '<?php echo uuid() ?>';
         });
 
         Blade::directive('video', function (string $expression) {

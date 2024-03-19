@@ -37,8 +37,8 @@ class Snippet
 
     public function getFile(string $name): ?string
     {
-        $bladeFile = $this->kirby->root('snippets') . '/' . $name . '.' . Template::EXTENSION_BLADE;
-        $fallbackFile = $this->kirby->root('snippets') . '/' . $name . '.' . Template::EXTENSION_FALLBACK;
+        $bladeFile = $this->kirby->root('snippets').'/'.$name.'.'.Template::EXTENSION_BLADE;
+        $fallbackFile = $this->kirby->root('snippets').'/'.$name.'.'.Template::EXTENSION_FALLBACK;
 
         // blade snippet exists
         if (file_exists($bladeFile)) {

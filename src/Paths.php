@@ -13,7 +13,7 @@ class Paths
         }
 
         if ($path !== null) {
-            return kirby()->roots()->index() . '/' . $path;
+            return kirby()->roots()->index().'/'.$path;
         }
 
         return kirby()->root('templates');
