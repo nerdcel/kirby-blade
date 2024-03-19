@@ -7,7 +7,7 @@
 [![Release](https://img.shields.io/github/v/release/lukasleitsch/kirby-blade?style=flat-square)](https://github.com/lukasleitsch/kirby-blade)
 [![License](https://img.shields.io/github/license/lukasleitsch/kirby-blade?style=flat-square)](https://github.com/lukasleitsch/kirby-blade)
 
-Kirby Blade use Laravel `illuminate/view` 10.x package and compatible with Kirby 4.
+Kirby Blade use Laravel `illuminate/view` 11.x package and compatible with Kirby 4.
 
 This package enables [Laravel Blade](https://laravel.com/docs/9.x/blade) for your own Kirby applications.
 
@@ -66,7 +66,7 @@ All the views generated are stored in `site/cache/views` directory or wherever y
 
 ### Directives
 
-By default Kirby Blade comes with following directives:
+By default, Kirby Blade comes with following directives:
 
 ```php
 @asset($path)
@@ -134,7 +134,7 @@ Like directives, you can create your own if statements:
 ],
 ```
 
-After declaration you can use it like:
+After declaration, you can use it like:
 
 ```php
 @logged
