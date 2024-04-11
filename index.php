@@ -1,6 +1,7 @@
 <?php
 
 use Kirby\Cms\App as Kirby;
+use Kirby\Template\Snippet as KirbySnippet;
 use Leitsch\Blade\BladeDirectives;
 use Leitsch\Blade\BladeFactory;
 use Leitsch\Blade\BladeIfStatements;
@@ -22,8 +23,8 @@ Kirby::plugin('leitsch/blade', [
         'template' => function (Kirby $kirby, string $name, ?string $contentType = null) {
             return new Template($kirby, $name, $contentType);
         },
-        'snippet' => function (Kirby $kirby, $name, array $data = []): ?string {
-            return (new Snippet($kirby, $name, $data))->load();
+        'snippet' => function (Kirby $kirby, string $name, array $data = [], bool $slots = false): KirbySnippet|string {
+            return (new Snippet($kirby, $name, $data, $slots))->load();
         },
     ],
     'hooks' => [

@@ -4,16 +4,16 @@ namespace Leitsch\Blade;
 
 use Illuminate\Support\Facades\View;
 use Kirby\Cms\App as Kirby;
+use Kirby\Template\Snippet as KirbySnippet;
 use Kirby\Toolkit\A;
-use Kirby\Toolkit\Tpl;
 
 class Snippet
 {
-    public function __construct(protected Kirby $kirby, protected $name, protected array $data = [])
+    public function __construct(protected Kirby $kirby, protected $name, protected array $data = [], protected bool $slots = false)
     {
     }
 
-    public function load(): string
+    public function load(): string|KirbySnippet
     {
         $snippets = A::wrap($this->name);
         $file = null;
@@ -32,7 +32,7 @@ class Snippet
         }
 
         // vanilla PHP snippet
-        return Tpl::load($file, $this->data);
+        return KirbySnippet::factory($this->name, $this->data, $this->slots);
     }
 
     public function getFile(string $name): ?string
