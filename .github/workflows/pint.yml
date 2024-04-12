@@ -1,4 +1,4 @@
-name: PHP CS Fixer
+name: Pint
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - '**.php'
 
 jobs:
-  php-cs-fixer:
+  pint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
