@@ -9,7 +9,12 @@ use Kirby\Toolkit\A;
 
 class Snippet
 {
-    public function __construct(protected Kirby $kirby, protected $name, protected array $data = [], protected bool $slots = false)
+    public function __construct(
+        protected Kirby $kirby,
+        protected string|null $name,
+        protected array $data = [],
+        protected bool $slots = false
+    )
     {
     }
 
